@@ -1,14 +1,13 @@
 //
-//  RowHeaderView.h
+//  RTCollectionViewCell.h
 //  RTTwoDimensionalScroll
 //
-//  Created by Santhosh on 08/09/16.
+//  Created by Santhosh on 21/09/16.
 //  Copyright © 2016 riktam. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface RowHeaderView : UIView
-
+@interface RTCollectionViewCell : UICollectionViewCell
 
 @end

@@ -1,14 +1,14 @@
 //
-//  RowHeaderView.m
+//  RTCollectionViewCell.m
 //  RTTwoDimensionalScroll
 //
-//  Created by Santhosh on 08/09/16.
+//  Created by Santhosh on 21/09/16.
 //  Copyright © 2016 riktam. All rights reserved.
 //
 
-#import "RowHeaderView.h"
+#import "RTCollectionViewCell.h"
 
-@implementation RowHeaderView
+@implementation RTCollectionViewCell
 
 /*
 // Only override drawRect: if you perform custom drawing.
