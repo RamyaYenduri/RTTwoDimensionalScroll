@@ -2,12 +2,12 @@
 //  RTCollectionViewLayout.m
 //  RTTwoDimensionalScroll
 //
-//  Created by Santhosh on 08/09/16.
+//  Created by Santhosh on 26/09/16.
 //  Copyright © 2016 riktam. All rights reserved.
 //
 
 #import "RTCollectionViewLayout.h"
-#import "RTDataSource.h"
+#import "RTCollectionView.h"
 
 NSString *const RTCollectionViewLayoutSupplementaryViewColumnHeader = @"RTCollectionViewLayoutSupplementaryViewColumnHeader";
 NSString *const RTCollectionViewLayoutSupplementaryViewRowHeader = @"RTCollectionViewLayoutSupplementaryViewRowHeader";
@@ -65,6 +65,7 @@ NSString *const RTCollectionViewLayoutSupplementaryViewCornerCell = @"RTCollecti
 @end
 
 #pragma mark - BLCollectionViewTableLayoutInvalidationContext
+
 @interface RTCollectionViewLayoutInvalidationContext : UICollectionViewFlowLayoutInvalidationContext
 
 @property (nonatomic) BOOL useCachedSizing;
@@ -83,7 +84,7 @@ NSString *const RTCollectionViewLayoutSupplementaryViewCornerCell = @"RTCollecti
 @property (nonatomic,strong) NSArray *cellAttribute;
 @property (nonatomic,strong) NSDictionary *supplementaryAttribute;
 @property (nonatomic,strong) NSDictionary * decorationAttributes;
-@property (nonatomic,strong) RTViewCollectionViewSizing *tableSizing;
+@property (nonatomic,strong) RTViewCollectionViewSizing *collectionViewSizing;
 @property (nonatomic) BOOL skipBuildingCellAttributes;
 @property (nonatomic) BOOL hasRegisteredCellCornerDecorationView;
 
@@ -96,16 +97,13 @@ NSString *const RTCollectionViewLayoutSupplementaryViewCornerCell = @"RTCollecti
     self = [super init];
     if(self)
     {
-        
+        [self setup];
     }
     return self;
 }
 
 - (void)setup
 {
-    _cellSize = CGSizeMake(100,100);
-    _rowHeaderWidth = 0.0f;
-    _columnHeaderHeight = 0.0f;
     _collectionViewContentSize = CGSizeZero;
 }
 
@@ -130,7 +128,6 @@ NSString *const RTCollectionViewLayoutSupplementaryViewCornerCell = @"RTCollecti
             [self buildCollectionViewContentSize];
         }
     }
-    
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -213,10 +210,10 @@ NSString *const RTCollectionViewLayoutSupplementaryViewCornerCell = @"RTCollecti
 
 #define Accessor Overrides
 
-- (RTViewCollectionViewSizing *)tableSizing
+- (RTViewCollectionViewSizing *)collectionViewSizing
 {
-    _tableSizing = [self createTableSizing];
-    return _tableSizing;
+    _collectionViewSizing = [self createCollectionViewSizing];
+    return _collectionViewSizing;
 }
 
 #pragma mark - Developer methods
@@ -265,22 +262,28 @@ NSString *const RTCollectionViewLayoutSupplementaryViewCornerCell = @"RTCollecti
 
 - (void)buildCellAttributes
 {
-    RTViewCollectionViewSizing *sizing = self.tableSizing;
+    RTViewCollectionViewSizing *sizing = self.collectionViewSizing;
     NSMutableArray *tmpAttributes = [[NSMutableArray alloc] init];
     CGFloat yOffset = sizing.columnHeaderHeight;
-    NSUInteger sections = [self.collectionView numberOfSections];
+    NSUInteger noOfrows = [(id<RTCollectionViewDataSource>)((RTCollectionView *)self.collectionView).dataSource numberOfRowsForCollectionView:(RTCollectionView *)self.collectionView];
     
-    for (NSUInteger section = 0; section != sections; section++) {
-        NSUInteger rows = [self.collectionView numberOfItemsInSection:section];
+    for (NSUInteger row = 0; row != noOfrows; row++) {
+        NSUInteger noOfitems = [(id<RTCollectionViewDataSource>)((RTCollectionView *)self.collectionView).dataSource numberOfItemsInRow:row ForCollectionView:(RTCollectionView *)self.collectionView];
         CGFloat xOffset = sizing.rowHeaderWidth;
-        CGFloat height = [sizing heightForRow:section];
+        CGFloat height = [sizing heightForRow:row];
         
         NSMutableArray *tmpRowAttributes = [[NSMutableArray alloc] init];
-        for (NSUInteger row = 0; row != rows; row++) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+        for (NSUInteger column = 0; column != noOfitems; column++) {
+           
+            struct RTRowColumnIndex index;
+            index.row = row;
+            index.column = column;
             
-            CGSize size = [((id<RTCollectionViewLayoutDelegate>)self.collectionView.delegate) collectionView:self.collectionView layout:self sizeForCellAtIndexPath:indexPath];
+            CGSize size = [((id<RTCollectionViewDataSource>)(self.collectionView).delegate) collectionView:(RTCollectionView *)self.collectionView layout:self sizeForCellAtIndex:index];
+            
             CGFloat width = size.width;
+            
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:column inSection:row];
             
             UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
             attributes.frame = CGRectMake(xOffset, yOffset, width, height);
@@ -297,7 +300,7 @@ NSString *const RTCollectionViewLayoutSupplementaryViewCornerCell = @"RTCollecti
 
 - (void) buildSupplementaryAttributes {
     
-    RTViewCollectionViewSizing *sizing = self.tableSizing;
+    RTViewCollectionViewSizing *sizing = self.collectionViewSizing;
     
     NSMutableDictionary *rowHeaderAttributes = self.supplementaryAttribute[RTCollectionViewLayoutSupplementaryViewRowHeader] ?: [NSMutableDictionary dictionary];
     
@@ -305,20 +308,22 @@ NSString *const RTCollectionViewLayoutSupplementaryViewCornerCell = @"RTCollecti
     
     if (sizing.columnHeaderHeight > 0 || sizing.rowHeaderWidth > 0)
     {
-        NSUInteger maximumRows = 0;
+        NSUInteger maximumRowItems = 0;
         CGFloat yOffset = sizing.columnHeaderHeight;
-        NSUInteger sections = [self.collectionView numberOfSections];
         
-        for (NSUInteger section = 0; section != sections; section++)
+        NSInteger noOfrows = [(id<RTCollectionViewDataSource>)((RTCollectionView *)self.collectionView).dataSource numberOfRowsForCollectionView:(RTCollectionView *)self.collectionView];
+
+        
+        for (NSUInteger row = 0; row != noOfrows; row++)
         {
-            NSUInteger rows = [self.collectionView numberOfItemsInSection:section];
-            maximumRows = MAX(maximumRows,rows);
+            NSUInteger noOfitems = [(id<RTCollectionViewDataSource>)((RTCollectionView *)self.collectionView).dataSource numberOfItemsInRow:row ForCollectionView:(RTCollectionView *)self.collectionView];
+            maximumRowItems = MAX(maximumRowItems,noOfitems);
             
             if (sizing.rowHeaderWidth > 0)
             {
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:section];
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:row];
                 UICollectionViewLayoutAttributes * attributes2 = rowHeaderAttributes[indexPath]?:[UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:RTCollectionViewLayoutSupplementaryViewRowHeader withIndexPath:indexPath];
-                CGFloat height = [sizing heightForRow:section];
+                CGFloat height = [sizing heightForRow:row];
                 CGFloat xOffset = CGRectGetMinX(self.collectionView.bounds) + self.collectionView.contentInset.left;
                 attributes2.frame = CGRectMake(xOffset, yOffset, sizing.rowHeaderWidth, height);
                 attributes2.zIndex = 100;
@@ -326,16 +331,18 @@ NSString *const RTCollectionViewLayoutSupplementaryViewCornerCell = @"RTCollecti
                 yOffset += height;
             }
         }
-        maximumRows = [(RTDataSource *)self.collectionView.dataSource numberOfColumnHeaders];
+        
+        NSUInteger noOfColumns = [(id<RTCollectionViewDataSource>)((RTCollectionView *)self.collectionView).dataSource numberOfColumnsForCollectionView:(RTCollectionView *)self.collectionView];
+        
         if (sizing.columnHeaderHeight > 0)
         {
             CGFloat xOffset = sizing.rowHeaderWidth;
             
-            for (NSUInteger row = 0 ; row != maximumRows ; row++ )
+            for (NSUInteger column = 0 ; column != noOfColumns ; column++ )
             {
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:column inSection:0];
                 UICollectionViewLayoutAttributes *attributes = columnHeaderAttributes[indexPath]?:[UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:RTCollectionViewLayoutSupplementaryViewColumnHeader withIndexPath:indexPath];
-                CGFloat width = [sizing widthForColumn:row];
+                CGFloat width = [sizing widthForColumn:column];
                 CGFloat yOffset = CGRectGetMinY(self.collectionView.bounds) + self.collectionView.contentInset.top;
                 attributes.frame = CGRectMake(xOffset,yOffset,width,sizing.columnHeaderHeight);
                 attributes.zIndex = 200;
@@ -346,12 +353,11 @@ NSString *const RTCollectionViewLayoutSupplementaryViewCornerCell = @"RTCollecti
         }
     }
     self.supplementaryAttribute = @{RTCollectionViewLayoutSupplementaryViewColumnHeader : columnHeaderAttributes,RTCollectionViewLayoutSupplementaryViewRowHeader : rowHeaderAttributes};
-    
 }
 
 - (void)buildDecorationAttributes
 {
-    RTViewCollectionViewSizing *sizing = self.tableSizing;
+    RTViewCollectionViewSizing *sizing = self.collectionViewSizing;
     
     NSMutableDictionary *cellCornerAttributes = [NSMutableDictionary dictionary];
     
@@ -368,52 +374,49 @@ NSString *const RTCollectionViewLayoutSupplementaryViewCornerCell = @"RTCollecti
     self.decorationAttributes = @{RTCollectionViewLayoutSupplementaryViewCornerCell: cellCornerAttributes};
 }
 
-#pragma mark - Sizing
-
-- (RTViewCollectionViewSizing *)createTableSizing
+- (RTViewCollectionViewSizing *)createCollectionViewSizing
 {
     RTViewCollectionViewSizing *sizing = [[RTViewCollectionViewSizing alloc] init];
-    NSUInteger sections = [self.collectionView numberOfSections];
+    NSUInteger noOfrows = [(id<RTCollectionViewDataSource>)((RTCollectionView *)self.collectionView).dataSource numberOfRowsForCollectionView:(RTCollectionView *)self.collectionView];
     
-    BOOL delegatesHeaderSizing = (self.collectionView.delegate) && [self.collectionView.delegate respondsToSelector:@selector(collectionView:layout:supplementaryViewOfKind:sizeAtIndexPath:)];
+    BOOL delegatesHeaderSizing = (self.collectionView.delegate) && [self.collectionView.delegate respondsToSelector:@selector(collectionView:layout:supplementaryViewOfKind:sizeAtIndex:)];
     
     if (delegatesHeaderSizing)
     {
-        sizing.rowHeaderWidth = self.rowHeaderWidth;
-        sizing.columnHeaderHeight = self.columnHeaderHeight;
+        sizing.rowHeaderWidth = [(id<RTCollectionViewDataSource>)((RTCollectionView *)self.collectionView).dataSource sizeForRowHeadersForCollectionView:((RTCollectionView *)self.collectionView)].width;
+        sizing.columnHeaderHeight = [(id<RTCollectionViewDataSource>)((RTCollectionView *)self.collectionView).dataSource sizeForColumnHeadersForCollectionView:((RTCollectionView *)self.collectionView)].height;
     }
     
-    for (NSUInteger section = 0 ; section != sections ; section++)
+    for (NSUInteger row = 0 ; row != noOfrows ; row++)
     {
-        
         if (delegatesHeaderSizing)
         {
-            CGSize size = [((id<RTCollectionViewLayoutDelegate>)self.collectionView.delegate) collectionView:self.collectionView layout:self supplementaryViewOfKind:RTCollectionViewLayoutSupplementaryViewRowHeader sizeAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section]];
+            CGSize size = [((id<RTCollectionViewDataSource>)self.collectionView.dataSource) collectionView:(RTCollectionView *)self.collectionView layout:self supplementaryViewOfKind:RTCollectionViewLayoutSupplementaryViewRowHeader sizeAtIndex:row];
             if(sizing.rowHeaderWidth < size.width)
             {
                 sizing.rowHeaderWidth = size.width;
             }
             
-            [sizing setHeight:size.height forRow:section];
+            [sizing setHeight:size.height forRow:row];
             
         }
     }
-    NSUInteger rows = [(RTDataSource *)self.collectionView.dataSource numberOfColumnHeaders];
+    NSUInteger noOfColumns = [((id<RTCollectionViewDataSource>)self.collectionView.dataSource) numberOfColumnsForCollectionView:((RTCollectionView *)self.collectionView)];
     
-    for (NSUInteger row = 0 ; row != rows ; row++)
+    for (NSUInteger column = 0 ; column != noOfColumns ; column++)
     {
         if (delegatesHeaderSizing)
         {
-            CGSize size = [((id<RTCollectionViewLayoutDelegate>)self.collectionView.delegate) collectionView:self.collectionView layout:self supplementaryViewOfKind:RTCollectionViewLayoutSupplementaryViewColumnHeader sizeAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
+            CGSize size = [((id<RTCollectionViewDataSource>)self.collectionView.dataSource) collectionView:(RTCollectionView *)self.collectionView layout:self supplementaryViewOfKind:RTCollectionViewLayoutSupplementaryViewColumnHeader sizeAtIndex:column];
             
             if (sizing.columnHeaderHeight < size.height)
             {
                 sizing.columnHeaderHeight = size.height;
             }
             
-            if ([sizing widthForColumn:row] < size.width)
+            if ([sizing widthForColumn:column] < size.width)
             {
-                [sizing setWidth:size.width forColumn:row];
+                [sizing setWidth:size.width forColumn:column];
             }
         }
     }
@@ -437,6 +440,9 @@ NSString *const RTCollectionViewLayoutSupplementaryViewCornerCell = @"RTCollecti
     self.cellAttribute = nil;
     self.supplementaryAttribute = nil;
     self.decorationAttributes = nil;
+    
+    self.collectionViewContentSize = CGSizeZero;
 }
+
 
 @end
