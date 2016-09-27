@@ -15,8 +15,11 @@ struct RTRowColumnIndex {
 
 @class RTCollectionViewLayout;
 @class RTCollectionView;
+@class RTCollectionViewCell;
+@class RTRowHeaderCollectionReusableView;
+@class RTColumnHeaderCollectionReusableView;
 
-@protocol RTCollectionViewDataSource <UICollectionViewDataSource>
+@protocol RTCollectionViewDataSource <NSObject>
 
 - (NSInteger)numberOfRowsForCollectionView:(RTCollectionView *)collectionView;
 - (NSInteger)numberOfColumnsForCollectionView:(RTCollectionView *)collectionView;
@@ -27,24 +30,30 @@ struct RTRowColumnIndex {
 - (CGSize)sizeForRowHeadersForCollectionView:(RTCollectionView *)collectionView;
 - (CGSize)sizeForCellForCollectionView:(RTCollectionView *)collectionView ForIndex:(struct RTRowColumnIndex)index;
 
-- (UIView *)rowHeaderViewForRow:(NSInteger)row ForCollectionView:(RTCollectionView *)collectionView;
-- (UIView *)columnHeaderViewForColumn:(NSInteger)column ForCollectionView:(RTCollectionView *)collectionView;
+- (RTCollectionViewCell *)collectionView:(RTCollectionView *)collectionView cellForRTRowColumnIndex:(struct RTRowColumnIndex)index;
+- (RTColumnHeaderCollectionReusableView *)collectionView:(RTCollectionView *)collectionView viewForColumnHeaderAtIndex:(NSInteger)columnIndex;
+- (RTRowHeaderCollectionReusableView *)collectionView:(RTCollectionView *)collectionView viewForRowHeaderAtIndex:(NSInteger)columnIndex;
+
 - (UIView *)cornerViewForCollectionView:(RTCollectionView *)collectionView;
 
 - (CGSize) collectionView:(RTCollectionView *)collectionView layout:(RTCollectionViewLayout *)layout sizeForCellAtIndex:(struct RTRowColumnIndex)index;
 - (CGSize) collectionView:(RTCollectionView *)collectionView layout:(RTCollectionViewLayout *)layout supplementaryViewOfKind:(NSString *)kind sizeAtIndex:(NSInteger)index;
 
+
 @end
 
-@protocol RTCollectionViewDelegate <UICollectionViewDelegate>
+@protocol RTCollectionViewDelegate <NSObject>
 
 
 @end
 
 @interface RTCollectionView : UICollectionView
 
-@property (nonatomic,weak) id<RTCollectionViewDelegate> delegate;
-@property (nonatomic,weak) id<RTCollectionViewDataSource> dataSource;
+@property (nonatomic,weak) id<RTCollectionViewDelegate> rtDelegate;
+@property (nonatomic,weak) id<RTCollectionViewDataSource> rtDataSource;
 
+- (RTCollectionViewCell *)dequeueReusableCellWithReuseIdentifier:(NSString *)identifier ForRTRowcolumnIndex:(struct RTRowColumnIndex)index;
+- (RTColumnHeaderCollectionReusableView *)dequeueReusableColumnHeaderCellWithReuseIdentifier:(NSString *)identifier AtIndex:(NSInteger)index;
+- (RTRowHeaderCollectionReusableView *)dequeueReusableRowHeaderCellWithReuseIdentifier:(NSString *)identifier AtIndex:(NSInteger)index;
 
 @end

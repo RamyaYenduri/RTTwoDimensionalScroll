@@ -7,10 +7,16 @@
 //
 
 #import "RTCollectionView.h"
+#import "RTCollectionViewLayout.h"
+#import "RTCollectionViewCell.h"
+#import "RTColumnHeaderCollectionReusableView.h"
+#import "RTRowHeaderCollectionReusableView.h"
+
+@interface RTCollectionView() <UICollectionViewDelegate,UICollectionViewDataSource>
+
+@end
 
 @implementation RTCollectionView
-
-@dynamic delegate,dataSource;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -19,5 +25,85 @@
     // Drawing code
 }
 */
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    
+    RTCollectionViewLayout *layout = [[RTCollectionViewLayout alloc] init];
+    
+    self = [super initWithFrame:frame collectionViewLayout:layout];
+    
+    if (self)
+    {
+        self.delegate = self;
+        self.dataSource = self;
+    }
+    
+    return self;
+}
+
+#pragma mark - RTCOLLECTION VIEW METHODS
+
+- (RTCollectionViewCell *)dequeueReusableCellWithReuseIdentifier:(NSString *)identifier ForRTRowcolumnIndex:(struct RTRowColumnIndex)index
+{
+    return [self dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:[NSIndexPath indexPathForRow:index.row inSection:index.column]];
+}
+
+- (RTColumnHeaderCollectionReusableView *)dequeueReusableColumnHeaderCellWithReuseIdentifier:(NSString *)identifier AtIndex:(NSInteger)index
+{
+    return [self dequeueReusableSupplementaryViewOfKind:RTCollectionViewLayoutSupplementaryViewColumnHeader withReuseIdentifier:identifier forIndexPath:[NSIndexPath indexPathForRow:0 inSection:index]];
+}
+
+- (RTRowHeaderCollectionReusableView *)dequeueReusableRowHeaderCellWithReuseIdentifier:(NSString *)identifier AtIndex:(NSInteger)index
+{
+    return [self dequeueReusableSupplementaryViewOfKind:RTCollectionViewLayoutSupplementaryViewRowHeader withReuseIdentifier:identifier forIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+}
+
+#pragma mark - UICOLLECTION VIEW DATASOURCE
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    if ([self.rtDataSource respondsToSelector:@selector(numberOfItemsInRow:ForCollectionView:)])
+    {
+        return [self.rtDataSource numberOfItemsInRow:section ForCollectionView:self];
+    }
+    
+    return 0;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    if ([self.rtDataSource respondsToSelector:@selector(numberOfRowsForCollectionView:)])
+    {
+        return [self.rtDataSource numberOfRowsForCollectionView:self];
+    }
+    
+    return 0;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    struct RTRowColumnIndex index;
+    index.row = indexPath.section;
+    index.column = indexPath.row;
+    
+    return [self.rtDataSource collectionView:self cellForRTRowColumnIndex:index];
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    if ([kind isEqualToString:RTCollectionViewLayoutSupplementaryViewColumnHeader])
+    {
+        return [self.rtDataSource collectionView:self viewForColumnHeaderAtIndex:indexPath.section];
+    }
+    
+    if ([kind isEqualToString:RTCollectionViewLayoutSupplementaryViewRowHeader])
+    {
+        return [self.rtDataSource collectionView:self viewForRowHeaderAtIndex:indexPath.row];
+    }
+    
+    return nil;
+}
+
 
 @end
