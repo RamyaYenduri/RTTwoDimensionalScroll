@@ -7,16 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 
-@interface RTDataSource : NSObject <UICollectionViewDataSource>
+#import "RTCollectionView.h"
+#import "RTCollectionViewData.h"
 
-- (instancetype) initWithRowHeaders:(NSArray *)rowHeaderAry columnHeaders:(NSArray *)columnHeaderAry cellDetails:(NSArray *)cellDetailsAry;
+@interface RTDataSource : NSObject <RTCollectionViewDataSource,RTCollectionViewDelegate>
 
-@property (nonatomic, strong) NSArray *cellAry;
-@property (nonatomic, strong) NSArray *rowHeaderAry;
-@property (nonatomic, strong) NSArray *columnHeaderAry;
-
-- (NSInteger)numberOfColumnHeaders;
+@property (nonatomic,strong) RTCollectionViewData *collectionViewData;
 
 @end

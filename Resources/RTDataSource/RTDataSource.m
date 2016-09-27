@@ -13,63 +13,70 @@
 #import "RTRowHeaderCollectionReusableView.h"
 #import "RTCollectionViewLayout.h"
 
+#import "RTCellDetails.h"
+
 @implementation RTDataSource
 
-- (instancetype)init
+@synthesize collectionViewData;
+#pragma mark - RTCOLLECTION VIEW DATA SOURCE
+
+- (NSInteger)numberOfRowsForCollectionView:(RTCollectionView *)collectionView
 {
-    return [self initWithRowHeaders:nil columnHeaders:nil cellDetails:nil];
+    return collectionViewData.noOfRows;
 }
 
-- (instancetype) initWithRowHeaders:(NSArray *)rowHeaderAry columnHeaders:(NSArray *)columnHeaderAry cellDetails:(NSArray *)cellDetailsAry
+- (NSInteger)numberOfColumnsForCollectionView:(RTCollectionView *)collectionView
 {
-    self = [super init];
-    if (self) {
-        _rowHeaderAry = rowHeaderAry;
-        _cellAry = cellDetailsAry;
-        _columnHeaderAry = columnHeaderAry;
-    }
-    return self;
+    return collectionViewData.noOfColumns;
 }
 
-
-
-#pragma mark - UICOLLECTION VIEW DATA SOURCE
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (NSInteger)numberOfItemsInRow:(NSInteger)rowNo ForCollectionView:(RTCollectionView *)collectionView
 {
-    RTCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RTCellIdentifier" forIndexPath:indexPath];
+    return [[collectionViewData.cellDetailsArray objectAtIndex:rowNo] count];
+}
+
+- (CGSize)sizeForColumnHeadersForCollectionView:(RTCollectionView *)collectionView
+{
+    return collectionViewData.coulumnHeaderSize;
+}
+
+- (CGSize)sizeForRowHeadersForCollectionView:(RTCollectionView *)collectionView
+{
+    return collectionViewData.rowHeaderSize;
+}
+
+- (CGSize)sizeForCellForCollectionView:(RTCollectionView *)collectionView ForIndex:(struct RTRowColumnIndex)index
+{
+    return [(RTCellDetails *)[[collectionViewData.cellDetailsArray objectAtIndex:index.row] objectAtIndex:index.column] cellSize];
+}
+
+- (RTCollectionViewCell *)collectionView:(RTCollectionView *)collectionView cellForRTRowColumnIndex:(struct RTRowColumnIndex)index
+{
+    RTCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"" ForRTRowcolumnIndex:index];
+    cell.cellDetail = [[collectionViewData.cellDetailsArray objectAtIndex:index.row] objectAtIndex:index.column];
     
     return cell;
 }
 
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+- (RTColumnHeaderCollectionReusableView *)collectionView:(RTCollectionView *)collectionView viewForColumnHeaderAtIndex:(NSInteger)columnIndex
 {
-    if ([kind isEqualToString:RTCollectionViewLayoutSupplementaryViewColumnHeader])
-    {
-        RTColumnHeaderCollectionReusableView *columnView =[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"ColumnHeader" forIndexPath:indexPath];
-        return columnView;
-    }
+    RTColumnHeaderCollectionReusableView *cell = [collectionView dequeueReusableColumnHeaderCellWithReuseIdentifier:@"" AtIndex:columnIndex];
+    cell.columnHeaderDetail = [collectionViewData.columnHeaderDetailsArray objectAtIndex:columnIndex];
+   
+    return cell;
+}
+
+- (RTRowHeaderCollectionReusableView *)collectionView:(RTCollectionView *)collectionView viewForRowHeaderAtIndex:(NSInteger)columnIndex
+{
+    RTRowHeaderCollectionReusableView *cell = [collectionView dequeueReusableRowHeaderCellWithReuseIdentifier:@"" AtIndex:columnIndex];
+    cell.rowHeaderDetail = [collectionViewData.rowHeaderDetailsArray objectAtIndex:columnIndex];
     
-    if ([kind isEqualToString:RTCollectionViewLayoutSupplementaryViewRowHeader])
-    {
-        RTRowHeaderCollectionReusableView *rowView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"RowHeader" forIndexPath:indexPath];
-        return rowView;
-    }
     return nil;
 }
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return self.cellAry.count;
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return ((NSArray *)self.cellAry[section]).count;
-}
-
-- (NSInteger)numberOfColumnHeaders
+- (UIView *)cornerViewForCollectionView:(RTCollectionView *)collectionView
 {
-    return self.columnHeaderAry.count;
+    return nil;
 }
-
 
 @end

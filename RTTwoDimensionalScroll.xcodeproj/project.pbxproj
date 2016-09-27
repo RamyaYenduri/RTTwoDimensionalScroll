@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		7F13762D1D9918DF00CA2E61 /* RTCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F13762C1D9918DF00CA2E61 /* RTCollectionView.m */; };
 		7F1376301D9933BC00CA2E61 /* RTCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F13762F1D9933BC00CA2E61 /* RTCollectionViewLayout.m */; };
+		7F3EC9F01D9AA858001C050C /* RTCollectionViewData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F3EC9EF1D9AA858001C050C /* RTCollectionViewData.m */; };
+		7F3EC9F61D9AAD38001C050C /* RTCellDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F3EC9F51D9AAD38001C050C /* RTCellDetails.m */; };
+		7F3EC9F91D9AAD66001C050C /* RTColumnHeaderDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F3EC9F81D9AAD66001C050C /* RTColumnHeaderDetails.m */; };
+		7F3EC9FC1D9AAFCA001C050C /* RTRowHeaderDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F3EC9FB1D9AAFCA001C050C /* RTRowHeaderDetails.m */; };
 		7F43F5CA1D813FF10069DF0A /* RowHeaderVw.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F43F5C91D813FF10069DF0A /* RowHeaderVw.xib */; };
 		7F43F5CE1D8141440069DF0A /* ColumnHeaderVw.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F43F5CD1D8141440069DF0A /* ColumnHeaderVw.xib */; };
 		7F978ED51D755CF4000DFCC4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F978ED41D755CF4000DFCC4 /* main.m */; };
@@ -30,6 +34,14 @@
 		7F13762C1D9918DF00CA2E61 /* RTCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RTCollectionView.m; path = Resources/RTCollectionView/RTCollectionView.m; sourceTree = SOURCE_ROOT; };
 		7F13762E1D9933BC00CA2E61 /* RTCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTCollectionViewLayout.h; path = Resources/RTCollectionViewLayout/RTCollectionViewLayout.h; sourceTree = SOURCE_ROOT; };
 		7F13762F1D9933BC00CA2E61 /* RTCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RTCollectionViewLayout.m; path = Resources/RTCollectionViewLayout/RTCollectionViewLayout.m; sourceTree = SOURCE_ROOT; };
+		7F3EC9EE1D9AA858001C050C /* RTCollectionViewData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTCollectionViewData.h; path = Resources/RTDataSource/RTCollectionViewData.h; sourceTree = SOURCE_ROOT; };
+		7F3EC9EF1D9AA858001C050C /* RTCollectionViewData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RTCollectionViewData.m; path = Resources/RTDataSource/RTCollectionViewData.m; sourceTree = SOURCE_ROOT; };
+		7F3EC9F41D9AAD38001C050C /* RTCellDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTCellDetails.h; path = Resources/Cell/RTCellDetails.h; sourceTree = SOURCE_ROOT; };
+		7F3EC9F51D9AAD38001C050C /* RTCellDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RTCellDetails.m; path = Resources/Cell/RTCellDetails.m; sourceTree = SOURCE_ROOT; };
+		7F3EC9F71D9AAD66001C050C /* RTColumnHeaderDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTColumnHeaderDetails.h; path = "Resources/Column Header/RTColumnHeaderDetails.h"; sourceTree = SOURCE_ROOT; };
+		7F3EC9F81D9AAD66001C050C /* RTColumnHeaderDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RTColumnHeaderDetails.m; path = "Resources/Column Header/RTColumnHeaderDetails.m"; sourceTree = SOURCE_ROOT; };
+		7F3EC9FA1D9AAFCA001C050C /* RTRowHeaderDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTRowHeaderDetails.h; path = "Resources/Row Header/RTRowHeaderDetails.h"; sourceTree = SOURCE_ROOT; };
+		7F3EC9FB1D9AAFCA001C050C /* RTRowHeaderDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RTRowHeaderDetails.m; path = "Resources/Row Header/RTRowHeaderDetails.m"; sourceTree = SOURCE_ROOT; };
 		7F43F5C91D813FF10069DF0A /* RowHeaderVw.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RowHeaderVw.xib; path = "Resources/Row Header/RowHeaderVw.xib"; sourceTree = SOURCE_ROOT; };
 		7F43F5CD1D8141440069DF0A /* ColumnHeaderVw.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ColumnHeaderVw.xib; path = "Resources/Column Header/ColumnHeaderVw.xib"; sourceTree = SOURCE_ROOT; };
 		7F978ED01D755CF3000DFCC4 /* RTTwoDimensionalScroll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RTTwoDimensionalScroll.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,6 +93,8 @@
 				7F43F5C91D813FF10069DF0A /* RowHeaderVw.xib */,
 				7FD655FC1D92C54300A96E75 /* RTRowHeaderCollectionReusableView.h */,
 				7FD655FD1D92C54300A96E75 /* RTRowHeaderCollectionReusableView.m */,
+				7F3EC9FA1D9AAFCA001C050C /* RTRowHeaderDetails.h */,
+				7F3EC9FB1D9AAFCA001C050C /* RTRowHeaderDetails.m */,
 			);
 			name = "Row Header";
 			sourceTree = "<group>";
@@ -105,6 +119,8 @@
 				7F43F5CD1D8141440069DF0A /* ColumnHeaderVw.xib */,
 				7FD655F91D92C52300A96E75 /* RTColumnHeaderCollectionReusableView.h */,
 				7FD655FA1D92C52300A96E75 /* RTColumnHeaderCollectionReusableView.m */,
+				7F3EC9F71D9AAD66001C050C /* RTColumnHeaderDetails.h */,
+				7F3EC9F81D9AAD66001C050C /* RTColumnHeaderDetails.m */,
 			);
 			name = "Column Header";
 			sourceTree = "<group>";
@@ -173,6 +189,8 @@
 			children = (
 				7FD655DE1D92C11D00A96E75 /* RTDataSource.h */,
 				7FD655DF1D92C11D00A96E75 /* RTDataSource.m */,
+				7F3EC9EE1D9AA858001C050C /* RTCollectionViewData.h */,
+				7F3EC9EF1D9AA858001C050C /* RTCollectionViewData.m */,
 			);
 			name = RTDataSource;
 			sourceTree = "<group>";
@@ -183,6 +201,8 @@
 				7FD655F01D92C43D00A96E75 /* RTCollectionViewCell.h */,
 				7FD655F11D92C43D00A96E75 /* RTCollectionViewCell.m */,
 				7FD655E51D92C38F00A96E75 /* CellXibView.xib */,
+				7F3EC9F41D9AAD38001C050C /* RTCellDetails.h */,
+				7F3EC9F51D9AAD38001C050C /* RTCellDetails.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -260,16 +280,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F3EC9FC1D9AAFCA001C050C /* RTRowHeaderDetails.m in Sources */,
 				7F1376301D9933BC00CA2E61 /* RTCollectionViewLayout.m in Sources */,
 				7FD655FE1D92C54300A96E75 /* RTRowHeaderCollectionReusableView.m in Sources */,
 				7FD655FB1D92C52300A96E75 /* RTColumnHeaderCollectionReusableView.m in Sources */,
+				7F3EC9F01D9AA858001C050C /* RTCollectionViewData.m in Sources */,
 				7F978EDB1D755CF4000DFCC4 /* ViewController.m in Sources */,
 				7F978ED81D755CF4000DFCC4 /* AppDelegate.m in Sources */,
 				7FD655F81D92C4FF00A96E75 /* RTCornerCellCollectionReusableView.m in Sources */,
 				7F13762D1D9918DF00CA2E61 /* RTCollectionView.m in Sources */,
 				7FD655E01D92C11D00A96E75 /* RTDataSource.m in Sources */,
 				7F978ED51D755CF4000DFCC4 /* main.m in Sources */,
+				7F3EC9F61D9AAD38001C050C /* RTCellDetails.m in Sources */,
 				7FD655F21D92C43D00A96E75 /* RTCollectionViewCell.m in Sources */,
+				7F3EC9F91D9AAD66001C050C /* RTColumnHeaderDetails.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

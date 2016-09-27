@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RTCellDetails.h"
 
 @interface RTCollectionViewCell : UICollectionViewCell
+
+@property (nonatomic,strong) RTCellDetails *cellDetail;
 
 @end

@@ -36,9 +36,6 @@ struct RTRowColumnIndex {
 
 - (UIView *)cornerViewForCollectionView:(RTCollectionView *)collectionView;
 
-- (CGSize) collectionView:(RTCollectionView *)collectionView layout:(RTCollectionViewLayout *)layout sizeForCellAtIndex:(struct RTRowColumnIndex)index;
-- (CGSize) collectionView:(RTCollectionView *)collectionView layout:(RTCollectionViewLayout *)layout supplementaryViewOfKind:(NSString *)kind sizeAtIndex:(NSInteger)index;
-
 
 @end
 

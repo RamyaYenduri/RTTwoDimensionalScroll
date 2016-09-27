@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RTColumnHeaderDetails.h"
 
 @interface RTColumnHeaderCollectionReusableView : UICollectionReusableView
+
+@property (nonatomic,strong) RTColumnHeaderDetails *columnHeaderDetail;
 
 @end
