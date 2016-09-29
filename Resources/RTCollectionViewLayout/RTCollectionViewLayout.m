@@ -283,7 +283,7 @@ NSString *const RTCollectionViewLayoutSupplementaryViewCornerCell = @"RTCollecti
             
             CGFloat width = size.width;
             
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:column];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:column inSection:row];
             
             UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
             attributes.frame = CGRectMake(xOffset, yOffset, width, size.height);

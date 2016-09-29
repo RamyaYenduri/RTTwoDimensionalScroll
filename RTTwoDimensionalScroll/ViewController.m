@@ -60,10 +60,10 @@
     {
         NSMutableArray *rowAry = [[NSMutableArray alloc] init];
         
-        for (int j = 1; j <= 10 ; j++)
+        for (int j = 1; j <= 5 ; j++)
         {
             RTCellDetails *celldetail = [[RTCellDetails alloc] init];
-            celldetail.cellSize = CGSizeMake(200,100);
+            celldetail.cellSize = CGSizeMake(400,100);
             celldetail.cellText = [NSString stringWithFormat:@"(%i,%i)",i,j];
             [rowAry addObject:celldetail];
         }
