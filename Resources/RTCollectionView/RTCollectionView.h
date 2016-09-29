@@ -24,6 +24,9 @@ struct RTRowColumnIndex {
 - (NSInteger)numberOfRowsForCollectionView:(RTCollectionView *)collectionView;
 - (NSInteger)numberOfColumnsForCollectionView:(RTCollectionView *)collectionView;
 
+- (NSInteger)numberOfRowHeadersForCollectionView:(RTCollectionView *)collectionView;
+- (NSInteger)numberOfColumnHeadersForCollectionView:(RTCollectionView *)collectionView;
+
 - (NSInteger)numberOfItemsInRow:(NSInteger)rowNo ForCollectionView:(RTCollectionView *)collectionView;
 
 - (CGSize)sizeForColumnHeadersForCollectionView:(RTCollectionView *)collectionView ForIndex:(NSInteger)index;

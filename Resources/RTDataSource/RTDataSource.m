@@ -32,6 +32,16 @@
     return collectionViewData.noOfColumns;
 }
 
+- (NSInteger)numberOfRowHeadersForCollectionView:(RTCollectionView *)collectionView
+{
+    return collectionViewData.rowHeaderDetailsArray.count;
+}
+
+- (NSInteger)numberOfColumnHeadersForCollectionView:(RTCollectionView *)collectionView
+{
+    return collectionViewData.columnHeaderDetailsArray.count;
+}
+
 - (NSInteger)numberOfItemsInRow:(NSInteger)rowNo ForCollectionView:(RTCollectionView *)collectionView
 {
     return [[collectionViewData.cellDetailsArray objectAtIndex:rowNo] count];

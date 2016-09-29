@@ -42,7 +42,7 @@
 {
     RTCollectionViewData *data = [[RTCollectionViewData alloc] init];
     
-    data.noOfRows = 10;
+    data.noOfRows = 5;
     data.noOfColumns = 10;
     
     data.cellDetailsArray = [self buildCellDetailsAry];
@@ -56,7 +56,7 @@
 {
     NSMutableArray *ary = [[NSMutableArray alloc] init];
     
-    for (int i = 1 ; i <= 10 ; i++)
+    for (int i = 1 ; i <= 5 ; i++)
     {
         NSMutableArray *rowAry = [[NSMutableArray alloc] init];
         
@@ -80,7 +80,7 @@
     for (int i = 1 ; i <= 10 ; i++ )
     {
         RTRowHeaderDetails *rowHeaderdetail = [[RTRowHeaderDetails alloc] init];
-        rowHeaderdetail.rowHeaderSize = CGSizeMake(100,100);
+        rowHeaderdetail.rowHeaderSize = CGSizeMake(100,50);
         rowHeaderdetail.rowText = [NSString stringWithFormat:@"%i",i];
         
         [ary addObject:rowHeaderdetail];
@@ -96,7 +96,7 @@
     for (int i = 1 ; i <= 10 ; i++ )
     {
         RTColumnHeaderDetails *columnHeaderDetail = [[RTColumnHeaderDetails alloc] init];
-        columnHeaderDetail.columnHeaderSize = CGSizeMake(200,50);
+        columnHeaderDetail.columnHeaderSize = CGSizeMake(50,50);
         columnHeaderDetail.columnText = [NSString stringWithFormat:@"%i",i];
         
         [ary addObject:columnHeaderDetail];

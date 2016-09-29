@@ -63,7 +63,7 @@
 
 - (RTColumnHeaderCollectionReusableView *)dequeueReusableColumnHeaderCellWithReuseIdentifier:(NSString *)identifier AtIndex:(NSInteger)index
 {
-    return [self dequeueReusableSupplementaryViewOfKind:RTCollectionViewLayoutSupplementaryViewColumnHeader withReuseIdentifier:identifier forIndexPath:[NSIndexPath indexPathForRow:0 inSection:index]];
+    return [self dequeueReusableSupplementaryViewOfKind:RTCollectionViewLayoutSupplementaryViewColumnHeader withReuseIdentifier:identifier forIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
 }
 
 - (RTRowHeaderCollectionReusableView *)dequeueReusableRowHeaderCellWithReuseIdentifier:(NSString *)identifier AtIndex:(NSInteger)index
@@ -106,7 +106,7 @@
 {
     if ([kind isEqualToString:RTCollectionViewLayoutSupplementaryViewColumnHeader])
     {
-        return [self.rtDataSource collectionView:self viewForColumnHeaderAtIndex:indexPath.section];
+        return [self.rtDataSource collectionView:self viewForColumnHeaderAtIndex:indexPath.row];
     }
     
     if ([kind isEqualToString:RTCollectionViewLayoutSupplementaryViewRowHeader])
