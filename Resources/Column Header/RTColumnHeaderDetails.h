@@ -12,5 +12,6 @@
 @interface RTColumnHeaderDetails : NSObject
 
 @property (nonatomic) CGSize columnHeaderSize;
+@property (nonatomic,strong) NSString *columnText;
 
 @end

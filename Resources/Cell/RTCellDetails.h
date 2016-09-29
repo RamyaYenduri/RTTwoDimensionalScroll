@@ -12,5 +12,6 @@
 @interface RTCellDetails : NSObject
 
 @property (nonatomic) CGSize cellSize;
+@property (nonatomic,strong) NSString *cellText;
 
 @end

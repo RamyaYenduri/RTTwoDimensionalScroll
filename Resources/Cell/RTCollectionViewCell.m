@@ -8,6 +8,12 @@
 
 #import "RTCollectionViewCell.h"
 
+@interface RTCollectionViewCell()
+
+@property (nonatomic,strong) UILabel *cellLbl;
+
+@end
+
 @implementation RTCollectionViewCell
 
 /*
@@ -25,9 +31,22 @@
     if (self)
     {
         self.backgroundColor = [UIColor redColor];
+        
+        _cellLbl = [[UILabel alloc] initWithFrame:self.bounds];
+        _cellLbl.backgroundColor = [UIColor clearColor];
+        _cellLbl.layer.borderWidth = 0.5;
+        _cellLbl.layer.borderColor = [UIColor whiteColor].CGColor;
+        _cellLbl.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:_cellLbl];
     }
     
     return self;
+}
+
+- (void)setCellDetail:(RTCellDetails *)cellDetail
+{
+    _cellDetail = cellDetail;
+    _cellLbl.text = cellDetail.cellText;
 }
 
 @end

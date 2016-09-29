@@ -54,30 +54,53 @@
 
 - (NSArray *)buildCellDetailsAry
 {
-    RTCellDetails *celldetail = [[RTCellDetails alloc] init];
-    celldetail.cellSize = CGSizeMake(200,100);
-    NSArray *rowAry = [[NSArray alloc] initWithObjects:celldetail,celldetail,celldetail,celldetail,celldetail,celldetail,celldetail,celldetail,celldetail,celldetail,nil];
+    NSMutableArray *ary = [[NSMutableArray alloc] init];
     
-    NSArray *ary = [[NSArray alloc] initWithObjects:rowAry,rowAry,rowAry,rowAry,rowAry,rowAry,rowAry,rowAry,rowAry,rowAry,nil];
+    for (int i = 1 ; i <= 10 ; i++)
+    {
+        NSMutableArray *rowAry = [[NSMutableArray alloc] init];
+        
+        for (int j = 1; j <= 10 ; j++)
+        {
+            RTCellDetails *celldetail = [[RTCellDetails alloc] init];
+            celldetail.cellSize = CGSizeMake(200,100);
+            celldetail.cellText = [NSString stringWithFormat:@"(%i,%i)",i,j];
+            [rowAry addObject:celldetail];
+        }
+        [ary addObject:rowAry];
+    }
     
     return ary;
 }
 
 - (NSArray *)buildrowHeaderDetailsAry
 {
-    RTRowHeaderDetails *rowHeaderdetail = [[RTRowHeaderDetails alloc] init];
-    rowHeaderdetail.rowHeaderSize = CGSizeMake(100,100);
-    NSArray *ary = [[NSArray alloc] initWithObjects:rowHeaderdetail,rowHeaderdetail,rowHeaderdetail,rowHeaderdetail,rowHeaderdetail,rowHeaderdetail,rowHeaderdetail,rowHeaderdetail,rowHeaderdetail,rowHeaderdetail,nil];
+    NSMutableArray *ary = [[NSMutableArray alloc] init];
+
+    for (int i = 1 ; i <= 10 ; i++ )
+    {
+        RTRowHeaderDetails *rowHeaderdetail = [[RTRowHeaderDetails alloc] init];
+        rowHeaderdetail.rowHeaderSize = CGSizeMake(100,100);
+        rowHeaderdetail.rowText = [NSString stringWithFormat:@"%i",i];
+        
+        [ary addObject:rowHeaderdetail];
+    }
     
     return ary;
 }
 
 - (NSArray *)buildcolumnHeaderDetailsAry
 {
-    RTColumnHeaderDetails *columnHeaderDetail = [[RTColumnHeaderDetails alloc] init];
-    columnHeaderDetail.columnHeaderSize = CGSizeMake(200,50);
+    NSMutableArray *ary = [[NSMutableArray alloc] init];
     
-    NSArray *ary = [[NSArray alloc] initWithObjects:columnHeaderDetail,columnHeaderDetail,columnHeaderDetail,columnHeaderDetail,columnHeaderDetail,columnHeaderDetail,columnHeaderDetail,columnHeaderDetail,columnHeaderDetail,columnHeaderDetail,nil];
+    for (int i = 1 ; i <= 10 ; i++ )
+    {
+        RTColumnHeaderDetails *columnHeaderDetail = [[RTColumnHeaderDetails alloc] init];
+        columnHeaderDetail.columnHeaderSize = CGSizeMake(200,50);
+        columnHeaderDetail.columnText = [NSString stringWithFormat:@"%i",i];
+        
+        [ary addObject:columnHeaderDetail];
+    }
     
     return ary;
 }

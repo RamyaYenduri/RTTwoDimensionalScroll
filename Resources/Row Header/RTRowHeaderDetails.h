@@ -12,5 +12,6 @@
 @interface RTRowHeaderDetails : NSObject
 
 @property (nonatomic) CGSize rowHeaderSize;
+@property (nonatomic,strong) NSString *rowText;
 
 @end
