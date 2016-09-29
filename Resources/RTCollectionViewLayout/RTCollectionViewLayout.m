@@ -270,15 +270,14 @@ NSString *const RTCollectionViewLayoutSupplementaryViewCornerCell = @"RTCollecti
     for (NSUInteger row = 0; row != noOfrows; row++) {
         NSUInteger noOfitems = [(id<RTCollectionViewDataSource>)((RTCollectionView *)self.collectionView).rtDataSource numberOfItemsInRow:row ForCollectionView:(RTCollectionView *)self.collectionView];
         CGFloat xOffset = sizing.rowHeaderWidth;
-        CGFloat height = [sizing heightForRow:row];
+        CGFloat height = 0.0 ;
         
         NSMutableArray *tmpRowAttributes = [[NSMutableArray alloc] init];
-        for (NSUInteger column = 0; column != noOfitems; column++) {
-           
+        for (NSUInteger column = 0; column != noOfitems; column++)
+        {
             struct RTRowColumnIndex index;
             index.row = row;
             index.column = column;
-            
             
             CGSize size = [[(RTCollectionView *)self.collectionView rtDataSource] sizeForCellForCollectionView:(RTCollectionView *)self.collectionView ForIndex:index];
             
@@ -287,7 +286,8 @@ NSString *const RTCollectionViewLayoutSupplementaryViewCornerCell = @"RTCollecti
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:column];
             
             UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-            attributes.frame = CGRectMake(xOffset, yOffset, width, height);
+            attributes.frame = CGRectMake(xOffset, yOffset, width, size.height);
+            height = size.height;
             [tmpRowAttributes addObject:attributes];
             xOffset += width;
         }
@@ -309,7 +309,6 @@ NSString *const RTCollectionViewLayoutSupplementaryViewCornerCell = @"RTCollecti
     
     if (sizing.columnHeaderHeight > 0 || sizing.rowHeaderWidth > 0)
     {
-        NSUInteger maximumRowItems = 0;
         CGFloat yOffset = sizing.columnHeaderHeight;
         
         NSInteger noOfrows = [[(RTCollectionView *)self.collectionView rtDataSource] numberOfRowsForCollectionView:(RTCollectionView *)self.collectionView];
@@ -317,9 +316,6 @@ NSString *const RTCollectionViewLayoutSupplementaryViewCornerCell = @"RTCollecti
         
         for (NSUInteger row = 0; row != noOfrows; row++)
         {
-            NSUInteger noOfitems = [[(RTCollectionView *)self.collectionView rtDataSource] numberOfItemsInRow:row ForCollectionView:(RTCollectionView *)self.collectionView];
-            maximumRowItems = MAX(maximumRowItems,noOfitems);
-            
             if (sizing.rowHeaderWidth > 0)
             {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
