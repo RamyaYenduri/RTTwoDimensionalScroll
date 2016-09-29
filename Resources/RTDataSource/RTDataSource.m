@@ -14,6 +14,8 @@
 #import "RTCollectionViewLayout.h"
 
 #import "RTCellDetails.h"
+#import "RTColumnHeaderDetails.h"
+#import "RTRowHeaderDetails.h"
 
 @implementation RTDataSource
 
@@ -35,14 +37,14 @@
     return [[collectionViewData.cellDetailsArray objectAtIndex:rowNo] count];
 }
 
-- (CGSize)sizeForColumnHeadersForCollectionView:(RTCollectionView *)collectionView
+- (CGSize)sizeForColumnHeadersForCollectionView:(RTCollectionView *)collectionView ForIndex:(NSInteger)index
 {
-    return collectionViewData.coulumnHeaderSize;
+    return [(RTColumnHeaderDetails *)[collectionViewData.columnHeaderDetailsArray objectAtIndex:index] columnHeaderSize];
 }
 
-- (CGSize)sizeForRowHeadersForCollectionView:(RTCollectionView *)collectionView
+- (CGSize)sizeForRowHeadersForCollectionView:(RTCollectionView *)collectionView ForIndex:(NSInteger)index
 {
-    return collectionViewData.rowHeaderSize;
+    return [(RTRowHeaderDetails *)[collectionViewData.rowHeaderDetailsArray objectAtIndex:index] rowHeaderSize];
 }
 
 - (CGSize)sizeForCellForCollectionView:(RTCollectionView *)collectionView ForIndex:(struct RTRowColumnIndex)index
@@ -52,7 +54,7 @@
 
 - (RTCollectionViewCell *)collectionView:(RTCollectionView *)collectionView cellForRTRowColumnIndex:(struct RTRowColumnIndex)index
 {
-    RTCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"" ForRTRowcolumnIndex:index];
+    RTCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CellIdentifier" ForRTRowcolumnIndex:index];
     cell.cellDetail = [[collectionViewData.cellDetailsArray objectAtIndex:index.row] objectAtIndex:index.column];
     
     return cell;
@@ -60,7 +62,7 @@
 
 - (RTColumnHeaderCollectionReusableView *)collectionView:(RTCollectionView *)collectionView viewForColumnHeaderAtIndex:(NSInteger)columnIndex
 {
-    RTColumnHeaderCollectionReusableView *cell = [collectionView dequeueReusableColumnHeaderCellWithReuseIdentifier:@"" AtIndex:columnIndex];
+    RTColumnHeaderCollectionReusableView *cell = [collectionView dequeueReusableColumnHeaderCellWithReuseIdentifier:@"ColumnHeader" AtIndex:columnIndex];
     cell.columnHeaderDetail = [collectionViewData.columnHeaderDetailsArray objectAtIndex:columnIndex];
    
     return cell;
@@ -68,10 +70,10 @@
 
 - (RTRowHeaderCollectionReusableView *)collectionView:(RTCollectionView *)collectionView viewForRowHeaderAtIndex:(NSInteger)columnIndex
 {
-    RTRowHeaderCollectionReusableView *cell = [collectionView dequeueReusableRowHeaderCellWithReuseIdentifier:@"" AtIndex:columnIndex];
+    RTRowHeaderCollectionReusableView *cell = [collectionView dequeueReusableRowHeaderCellWithReuseIdentifier:@"RowHeader" AtIndex:columnIndex];
     cell.rowHeaderDetail = [collectionViewData.rowHeaderDetailsArray objectAtIndex:columnIndex];
     
-    return nil;
+    return cell;
 }
 
 - (UIView *)cornerViewForCollectionView:(RTCollectionView *)collectionView

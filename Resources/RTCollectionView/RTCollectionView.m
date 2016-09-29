@@ -9,8 +9,10 @@
 #import "RTCollectionView.h"
 #import "RTCollectionViewLayout.h"
 #import "RTCollectionViewCell.h"
+
 #import "RTColumnHeaderCollectionReusableView.h"
 #import "RTRowHeaderCollectionReusableView.h"
+#import "RTCornerCellCollectionReusableView.h"
 
 @interface RTCollectionView() <UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -28,18 +30,28 @@
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
-    
     RTCollectionViewLayout *layout = [[RTCollectionViewLayout alloc] init];
     
     self = [super initWithFrame:frame collectionViewLayout:layout];
     
     if (self)
     {
+        [self registerTheClasses];
+        
         self.delegate = self;
         self.dataSource = self;
     }
     
     return self;
+}
+
+- (void)registerTheClasses
+{
+    [self registerClass:[RTColumnHeaderCollectionReusableView class] forSupplementaryViewOfKind:RTCollectionViewLayoutSupplementaryViewColumnHeader withReuseIdentifier:@"ColumnHeader"];
+    [self registerClass:[RTRowHeaderCollectionReusableView class] forSupplementaryViewOfKind:RTCollectionViewLayoutSupplementaryViewRowHeader withReuseIdentifier:@"RowHeader"];
+    [self.collectionViewLayout registerClass:[RTCornerCellCollectionReusableView class] forDecorationViewOfKind:RTCollectionViewLayoutSupplementaryViewCornerCell];
+    
+    [self registerClass:[RTCollectionViewCell class] forCellWithReuseIdentifier:@"CellIdentifier"];
 }
 
 #pragma mark - RTCOLLECTION VIEW METHODS

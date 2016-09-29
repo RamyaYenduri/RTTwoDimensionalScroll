@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface RTRowHeaderDetails : NSObject
+
+@property (nonatomic) CGSize rowHeaderSize;
 
 @end

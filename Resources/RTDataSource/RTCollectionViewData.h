@@ -13,8 +13,6 @@
 
 @property (nonatomic) NSInteger noOfRows;
 @property (nonatomic) NSInteger noOfColumns;
-@property (nonatomic) CGSize coulumnHeaderSize;
-@property (nonatomic) CGSize rowHeaderSize;
 
 @property (nonatomic,strong) NSArray *cellDetailsArray;
 @property (nonatomic,strong) NSArray *rowHeaderDetailsArray;

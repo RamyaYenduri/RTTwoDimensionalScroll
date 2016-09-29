@@ -11,7 +11,7 @@
 #import "RTCollectionView.h"
 #import "RTCollectionViewData.h"
 
-@interface RTDataSource : NSObject <RTCollectionViewDataSource,RTCollectionViewDelegate>
+@interface RTDataSource : NSObject <RTCollectionViewDataSource>
 
 @property (nonatomic,strong) RTCollectionViewData *collectionViewData;
 

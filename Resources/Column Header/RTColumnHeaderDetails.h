@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface RTColumnHeaderDetails : NSObject
+
+@property (nonatomic) CGSize columnHeaderSize;
 
 @end
