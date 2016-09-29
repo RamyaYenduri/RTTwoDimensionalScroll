@@ -43,7 +43,7 @@
     RTCollectionViewData *data = [[RTCollectionViewData alloc] init];
     
     data.noOfRows = 5;
-    data.noOfColumns = 10;
+    data.noOfColumns = 5;
     
     data.cellDetailsArray = [self buildCellDetailsAry];
     data.rowHeaderDetailsArray = [self buildrowHeaderDetailsAry];
@@ -93,16 +93,23 @@
 {
     NSMutableArray *ary = [[NSMutableArray alloc] init];
     
-    for (int i = 1 ; i <= 10 ; i++ )
+    for (int i = 1 ; i <= 20 ; i++ )
     {
         RTColumnHeaderDetails *columnHeaderDetail = [[RTColumnHeaderDetails alloc] init];
-        columnHeaderDetail.columnHeaderSize = CGSizeMake(50,50);
+        columnHeaderDetail.columnHeaderSize = CGSizeMake(100,50);
         columnHeaderDetail.columnText = [NSString stringWithFormat:@"%i",i];
         
         [ary addObject:columnHeaderDetail];
     }
     
     return ary;
+}
+
+#pragma mark - RTCOLLECTION VIEW DELEGATE
+
+- (void)collectionView:(RTCollectionView *)collectionView didSelectItemAtIndex:(struct RTRowColumnIndex)index
+{
+    NSLog(@"ROW = %li column = %li",(long)index.row,(long)index.column);
 }
 
 - (void)didReceiveMemoryWarning {

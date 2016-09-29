@@ -339,7 +339,7 @@ NSString *const RTCollectionViewLayoutSupplementaryViewCornerCell = @"RTCollecti
             {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:column inSection:0];
                 UICollectionViewLayoutAttributes *attributes = columnHeaderAttributes[indexPath]?:[UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:RTCollectionViewLayoutSupplementaryViewColumnHeader withIndexPath:indexPath];
-                CGFloat width = [sizing widthForColumn:column];
+                CGFloat width = [[(RTCollectionView *)self.collectionView rtDataSource] sizeForColumnHeadersForCollectionView:(RTCollectionView *)self.collectionView ForIndex:column].width;
                 CGFloat yOffset = CGRectGetMinY(self.collectionView.bounds) + self.collectionView.contentInset.top;
                 attributes.frame = CGRectMake(xOffset,yOffset,width,sizing.columnHeaderHeight);
                 attributes.zIndex = 200;

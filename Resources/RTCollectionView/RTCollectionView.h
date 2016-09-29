@@ -44,6 +44,7 @@ struct RTRowColumnIndex {
 
 @protocol RTCollectionViewDelegate <NSObject>
 
+- (void)collectionView:(RTCollectionView *)collectionView didSelectItemAtIndex:(struct RTRowColumnIndex)index;
 
 @end
 

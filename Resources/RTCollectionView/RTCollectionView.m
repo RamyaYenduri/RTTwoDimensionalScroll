@@ -117,5 +117,15 @@
     return nil;
 }
 
+#pragma mark - UI COLLECTION VIEW DELEGATE
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    struct RTRowColumnIndex index;
+    index.row = indexPath.section;
+    index.column = indexPath.row;
+    
+    [self.rtDelegate collectionView:self didSelectItemAtIndex:index];
+}
 
 @end
