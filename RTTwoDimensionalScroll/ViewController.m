@@ -28,7 +28,7 @@
     collectionViewDataSource = [[RTDataSource alloc] init];
     collectionViewDataSource.collectionViewData = [self buildTheDataForTheCollectionView];
     
-    RTCollectionView *collectionView = [[RTCollectionView alloc] initWithFrame:self.view.bounds];
+    RTCollectionView *collectionView = [[RTCollectionView alloc] initWithFrame:CGRectMake(0,20,self.view.frame.size.width,self.view.frame.size.height - 20)];
     collectionView.rtDelegate = self;
     collectionView.rtDataSource = collectionViewDataSource;
     

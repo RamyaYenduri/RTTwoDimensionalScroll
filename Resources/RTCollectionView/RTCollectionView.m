@@ -37,7 +37,7 @@
     if (self)
     {
         [self registerTheClasses];
-        
+        self.bounces = NO;
         self.delegate = self;
         self.dataSource = self;
     }
