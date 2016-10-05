@@ -49,7 +49,8 @@ RTCollectionViewData *data = [[RTCollectionViewData alloc] init];
 data.noOfRows = 8; // represents total number of rows.
 data.noOfColumns = 5; // represents total number of columns.
     
-data.cellDetailsArray = [self buildCellDetailsAry];
+data.cellDetailsArray = [self buildCellDetailsAry]; // array of arrays with RTCellDetails 
+// each index in the array represents the elements of the cells in each row
 data.rowHeaderDetailsArray = [self buildrowHeaderDetailsAry]; // array count represents the total number of row headers.
 // buildrowHeaderDetailsAry funtion should return array of RTRowHeaderDetails object
 data.columnHeaderDetailsArray = [self buildcolumnHeaderDetailsAry];// array count represents the total number of column headers.
