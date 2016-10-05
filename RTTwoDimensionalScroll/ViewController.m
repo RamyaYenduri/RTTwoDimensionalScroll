@@ -42,7 +42,7 @@
 {
     RTCollectionViewData *data = [[RTCollectionViewData alloc] init];
     
-    data.noOfRows = 5;
+    data.noOfRows = 8;
     data.noOfColumns = 5;
     
     data.cellDetailsArray = [self buildCellDetailsAry];
@@ -56,7 +56,7 @@
 {
     NSMutableArray *ary = [[NSMutableArray alloc] init];
     
-    for (int i = 1 ; i <= 5 ; i++)
+    for (int i = 1 ; i <= 8 ; i++)
     {
         NSMutableArray *rowAry = [[NSMutableArray alloc] init];
         
@@ -77,7 +77,7 @@
 {
     NSMutableArray *ary = [[NSMutableArray alloc] init];
 
-    for (int i = 1 ; i <= 10 ; i++ )
+    for (int i = 1 ; i <= 16 ; i++ )
     {
         RTRowHeaderDetails *rowHeaderdetail = [[RTRowHeaderDetails alloc] init];
         rowHeaderdetail.rowHeaderSize = CGSizeMake(100,50);
